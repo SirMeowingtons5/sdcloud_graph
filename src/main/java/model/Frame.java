@@ -1,3 +1,5 @@
+package model;
+
 import com.sun.istack.internal.NotNull;
 import java.util.HashMap;
 

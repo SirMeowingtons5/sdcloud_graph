@@ -1,3 +1,5 @@
+package model;
+
 import com.sun.istack.internal.NotNull;
 
 /**
@@ -12,9 +14,9 @@ public class Column {
 
     /**
      * Constructor
-     * @param id - Column ID
-     * @param displayName - Column displayed name
-     * @param unitName - Column's unit name
+     * @param id - model.Column ID
+     * @param displayName - model.Column displayed name
+     * @param unitName - model.Column's unit name
      */
     public Column(@NotNull String id, @NotNull String displayName, @NotNull String unitName){
         this.id = id;
