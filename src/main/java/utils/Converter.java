@@ -39,8 +39,13 @@ public class Converter {
             Frame frame = new Frame(frameObject.get("Time").getAsDouble(),
                                     frameObject.get("TimeDelta").getAsDouble());
             JsonObject values = frameObject.get("Values").getAsJsonObject();
-            model.getColumns().forEach(column -> frame.addValue(column.getId(),
-                           values.get(column.getId()).getAsDouble()));
+            
+            model.getColumns().forEach(column -> {
+                if (values.has(column.getId()))
+                    frame.addValue(column.getId(),
+                            values.get(column.getId()).getAsDouble());
+
+                    });
             model.addFrame(frame);
         });
         return model;
