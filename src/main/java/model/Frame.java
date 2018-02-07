@@ -31,7 +31,7 @@ public class Frame {
      * @param key - column ID
      * @param value - column value
      */
-    void addValue(@NotNull String key, double value){
+    public void addValue(@NotNull String key, double value){
         values.put(key, value);
     }
 
@@ -41,7 +41,7 @@ public class Frame {
      * @see Frame#time
      * @return current frame time
      */
-    double getTime(){
+    public double getTime(){
         return time;
     }
 
@@ -50,7 +50,7 @@ public class Frame {
      * @see Frame#timeDelta
      * @return time delta between previous and current frame
      */
-    double getTimeDelta(){
+    public double getTimeDelta(){
         return timeDelta;
     }
 
@@ -60,7 +60,7 @@ public class Frame {
      * @param key - column ID
      * @return column's value at current frame
      */
-    double getValue(@NotNull String key){
+    public double getValue(@NotNull String key){
         return values.get(key);
     }
 }

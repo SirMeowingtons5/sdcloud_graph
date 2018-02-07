@@ -29,7 +29,7 @@ public class Column {
      * @see Column#id
      * @return ID of the current column
      */
-    String getId(){
+    public String getId(){
         return id;
     }
 
@@ -38,7 +38,7 @@ public class Column {
      * @see Column#displayName
      * @return Displayed Name of the current column
      */
-    String getDisplayName(){
+    public String getDisplayName(){
         return displayName;
     }
 
@@ -47,7 +47,7 @@ public class Column {
      * @see Column#unitName
      * @return Unit Name of the current column
      */
-    String getUnitName(){
+    public String getUnitName(){
         return unitName;
     }
 

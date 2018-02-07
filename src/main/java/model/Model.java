@@ -71,4 +71,21 @@ public class Model {
     public ArrayList<Frame> getFrames() {
         return frames;
     }
+
+
+    //TODO: find another name
+
+    /**
+     * returns array of pairs [time][value]
+     * @param name - variable name
+     * @return array of pairs [time][value]
+     */
+    public double[][] getValueAsArray(String name){
+        double[][] res = new double[frames.size()][2];
+        for (int i = 0; i < frames.size(); i++){
+            res[i][0] = frames.get(i).getTime();
+            res[i][1] = frames.get(i).getValue(name);
+        }
+        return res;
+    }
 }
