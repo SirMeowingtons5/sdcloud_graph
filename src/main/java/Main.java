@@ -1,3 +1,4 @@
+import model.Interpolation;
 import model.Model;
 import utils.Converter;
 
@@ -6,6 +7,18 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args){
+        double[][] values = new double[20][2];
+        double xValue = -1;
+        for (int i = 0; i < values.length; i+=1){
+            values[i][0] = xValue;
+            values[i][1] = Math.sin(4 * xValue);
+            xValue+=0.1;
+        }
+
+        System.out.println();
+        Interpolation interpolation = new Interpolation(values, 0.1);
+
+        /*
         String path = System.getProperty("user.dir")+"\\examples\\"+"model-results-138.json";
         try {
             FileInputStream is = new FileInputStream(path);
@@ -22,7 +35,6 @@ public class Main {
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        //Converter c = new Converter()
+        }*/
     }
 }

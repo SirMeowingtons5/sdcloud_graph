@@ -1,7 +1,11 @@
 package model;
 
 import com.sun.istack.internal.NotNull;
+import org.apache.commons.math3.analysis.UnivariateFunction;
+import org.apache.commons.math3.analysis.interpolation.*;
 import org.apache.commons.math3.analysis.interpolation.SplineInterpolator;
+import org.apache.commons.math3.analysis.polynomials.PolynomialFunctionLagrangeForm;
+import org.apache.commons.math3.analysis.polynomials.PolynomialFunctionNewtonForm;
 import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction;
 
 /**
@@ -13,6 +17,8 @@ public class Interpolation {
     private double x[];
     private double y[];
     private double step;
+    private double min = Double.MAX_VALUE;
+    private double max = Double.MIN_VALUE;
 
     /**
      * @param funcValues array of x and y pairs; [i][0] is X and [i][1] is Y
@@ -23,6 +29,9 @@ public class Interpolation {
         for (int i = 0; i < funcValues.length; i++){
             x[i] = funcValues[i][0];
             y[i] = funcValues[i][1];
+            //find min and max for array
+            min = Double.min(min, x[i]);
+            max = Double.max(max, x[i]);
         }
     }
 
@@ -50,27 +59,57 @@ public class Interpolation {
 
     /**
      * Interpolates with splines
-     * @param start starting X coordinates
-     * @param end ending X coordinates
-     * @see Interpolation#setStep
-     * @return array of x and y pairs, [i][0] is X and [i][1] is Y;
-     * size depends on starting and end points and step size
+     * @return array of x and y pairs, [i][0] is X and [i][1] is Y.
      */
-    public double[][] splineInterpolation(double start, double end){
-        if (start > end){
-            double temp = start;
-            start = end;
-            end = temp;
-        }
-        int steps = (int) Math.ceil((end - start) / step);
-        double[][] res = new double[steps][2];
+    public double[][] splineInterpolation(){
         SplineInterpolator interpolator = new SplineInterpolator();
         PolynomialSplineFunction function = interpolator.interpolate(x, y);
 
+        return getInterpolatedValues(function);
+    }
+
+    /**
+     * Interpolates with divided difference algorithm.
+     * @return array of x and y pairs, [i][0] is X and [i][1] is Y.
+     */
+    public double[][] dividedDifferenceInterpolation(){
+        DividedDifferenceInterpolator interpolator = new DividedDifferenceInterpolator();
+        PolynomialFunctionNewtonForm function = interpolator.interpolate(x, y);
+
+        return getInterpolatedValues(function);
+    }
+
+    /**
+     * linear function for interpolation of real univariate functions.
+     * @return array of x and y pairs, [i][0] is X and [i][1] is Y.
+     */
+    public double[][] linearInterpolation(){
+        LinearInterpolator interpolator = new LinearInterpolator();
+        PolynomialSplineFunction function = interpolator.interpolate(x, y);
+
+        return getInterpolatedValues(function);
+    }
+
+    /**
+     * Implements the Neville's Algorithm for interpolation of real univariate functions.
+     * @return array of x and y pairs, [i][0] is X and [i][1] is Y.
+     */
+    public double[][] nevilleInterpolation(){
+        NevilleInterpolator interpolator = new NevilleInterpolator();
+        PolynomialFunctionLagrangeForm function = interpolator.interpolate(x, y);
+
+        return getInterpolatedValues(function);
+    }
+
+
+    private double[][] getInterpolatedValues(UnivariateFunction function){
+        int steps = (int) ((max - min) / step);
+        double[][] res = new double[steps][2];
+        double pointer = min;
         for (int i = 0; i < res.length; i++){
-            res[i][0] = start;
-            res[i][1] = function.value(start);
-            start+=step;
+            res[i][0] = pointer;
+            res[i][1] = function.value(pointer);
+            pointer+=step;
         }
         return res;
     }
