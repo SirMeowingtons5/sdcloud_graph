@@ -40,16 +40,11 @@ public class Interpolation {
      * @param step value between each x value for interpolation
      */
     public Interpolation(@NotNull double[][] funcValues, double step){
+        this(funcValues);
         setStep(step);
-        x = new double[funcValues.length];
-        y = new double[funcValues.length];
-        for (int i = 0; i < funcValues.length; i++){
-            x[i] = funcValues[i][0];
-            y[i] = funcValues[i][1];
-        }
     }
 
-    public void setStep(double value){
+    private void setStep(double value){
         if (value > 0){
             step = value;
         }else{
