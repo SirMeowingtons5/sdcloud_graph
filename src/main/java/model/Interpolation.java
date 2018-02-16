@@ -16,7 +16,7 @@ import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction;
 public class Interpolation {
     private double x[];
     private double y[];
-    private double step;
+    private double step = 0.1;
     private double min = Double.MAX_VALUE;
     private double max = Double.MIN_VALUE;
 
@@ -40,20 +40,9 @@ public class Interpolation {
      * @param step value between each x value for interpolation
      */
     public Interpolation(@NotNull double[][] funcValues, double step){
-        setStep(step);
-        x = new double[funcValues.length];
-        y = new double[funcValues.length];
-        for (int i = 0; i < funcValues.length; i++){
-            x[i] = funcValues[i][0];
-            y[i] = funcValues[i][1];
-        }
-    }
-
-    public void setStep(double value){
-        if (value > 0){
-            step = value;
-        }else{
-            step = 0.1;
+        this(funcValues);
+        if (step > 0){
+            this.step = step;
         }
     }
 
@@ -100,7 +89,6 @@ public class Interpolation {
 
         return getInterpolatedValues(function);
     }
-
 
     private double[][] getInterpolatedValues(UnivariateFunction function){
         int steps = (int) ((max - min) / step);

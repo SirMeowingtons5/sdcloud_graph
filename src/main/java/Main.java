@@ -17,6 +17,7 @@ public class Main {
 
         System.out.println();
         Interpolation interpolation = new Interpolation(values, 0.1);
+        interpolation.splineInterpolation();
 
         /*
         String path = System.getProperty("user.dir")+"\\examples\\"+"model-results-138.json";
